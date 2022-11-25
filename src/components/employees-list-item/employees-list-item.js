@@ -1,22 +1,30 @@
+
 import './employees-list-item.css';
 
-const EmployeesListItem = ({name, rate, increase}) => {
+const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLike}) => {
 
     let classNames = "list-group-item d-flex justify-content-between";
     if (increase) {
         classNames+= ' increase';
     }
+    if (like) {
+        classNames+= ' like';
+    }
 
     return (
         <li className={classNames}>
-            <span className="list-group-item-label">{name}</span>
+            <span 
+                className="list-group-item-label"
+                onClick={() => toggleLike(id)}
+                >{name}</span>
             <input type="text" className="list-group-item-input" defaultValue={'$' + rate}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
-                    className="btn-cookie btn-sm ">
+                    className="btn-cookie btn-sm "
+                    onClick={() => toggleMode(id)}>
                     <i className="fas fa-cookie"></i>
                 </button>
-
+ 
                 <button type="button"
                         className="btn-trash btn-sm ">
                     <i className="fas fa-trash"></i>
