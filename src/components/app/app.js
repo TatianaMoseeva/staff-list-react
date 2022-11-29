@@ -18,7 +18,7 @@ function App() {
     {id: id(), name: 'John Smith', rate: 800, increase: false, like: false},
     {id: id(), name: 'Peppa Pig', rate: 900, increase: false, like: false},
     {id: id(), name: 'Danny Dog', rate: 1100, increase: false, like: false},
-    {id: id(), name: 'Suzy Sheep', rate: 5000, increase: false, like: false},
+    {id: id(), name: 'Suzy Sheep', rate: 5000, increase: false, like: false}
   ]
 
   return (
