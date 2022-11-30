@@ -49,7 +49,10 @@ function App() {
         name: name,
         rate: rate
     };
-    setEmployees([...employees, newEmployee]);
+
+    if (newEmployee.name.length > 0 && newEmployee.rate) {
+      setEmployees([...employees, newEmployee]);
+    }
   }
 
 
