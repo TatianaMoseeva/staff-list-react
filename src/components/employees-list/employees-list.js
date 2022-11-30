@@ -9,7 +9,14 @@ function id() {
 	return nanoid();
 }
 
-const EmployeesList = ({data}) => {
+const data = [
+    {id: id(), name: 'John Smith', rate: 800, increase: false, like: false},
+    {id: id(), name: 'Peppa Pig', rate: 900, increase: false, like: false},
+    {id: id(), name: 'Danny Dog', rate: 1100, increase: false, like: false},
+    {id: id(), name: 'Suzy Sheep', rate: 5000, increase: false, like: false}
+  ]
+
+const EmployeesList = () => {
     
     const [employees, setEmployees] = useState(data);
 
@@ -41,9 +48,15 @@ const EmployeesList = ({data}) => {
                 toggleMode={toggleMode}
                 like={item.like}
                 toggleLike={toggleLike}
+                removeEmployee={removeEmployee}
             />
             
     })
+
+    function removeEmployee(id) {
+        const index = employees.findIndex(elem => elem.id === id);
+        setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
+    }
     
     function addEmployee(name, rate) {
         let newEmployee = {
@@ -52,10 +65,7 @@ const EmployeesList = ({data}) => {
             rate: rate
         };
         setEmployees([...employees, newEmployee]);
-        console.log(newEmployee);
     }
-
-
 
 
     return ( <>

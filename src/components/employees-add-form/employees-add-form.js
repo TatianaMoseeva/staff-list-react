@@ -31,7 +31,7 @@ const EmployeesAddForm = ({addEmployee}) => {
 
                 <button type="submit"
                     className="btn btn-outline-light"
-                    onClick={() => addEmployee(name, rate)}>
+                    onClick={() => {addEmployee(name, rate); setName(''); setRate('')}}>
                         Add employee
                 </button>
             </form>

@@ -1,7 +1,7 @@
 
 import './employees-list-item.css';
 
-const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLike}) => {
+const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLike, removeEmployee}) => {
 
     let classNames = "list-group-item d-flex justify-content-between";
     if (increase) {
@@ -26,7 +26,8 @@ const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLi
                 </button>
  
                 <button type="button"
-                        className="btn-trash btn-sm ">
+                        className="btn-trash btn-sm "
+                        onClick={() => removeEmployee(id)}>
                     <i className="fas fa-trash"></i>
                 </button>
                 <i className="fas fa-star"></i>
