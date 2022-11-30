@@ -2,7 +2,7 @@ import EmployeesListItem from "../employees-list-item/employees-list-item";
 
 import './employees-list.css';
 
-const EmployeesList = ({employees, toggleMode, toggleLike, removeEmployee}) => {
+const EmployeesList = ({employees, toggleMode, removeEmployee}) => {
     
     const elems =  employees.map(item => {
             return <EmployeesListItem
@@ -13,16 +13,15 @@ const EmployeesList = ({employees, toggleMode, toggleLike, removeEmployee}) => {
                 increase={item.increase}
                 toggleMode={toggleMode}
                 like={item.like}
-                toggleLike={toggleLike}
                 removeEmployee={removeEmployee}
             />
             
     })
 
-    return (<ul className="app-list list-group">
-                {elems}
-            </ul>
-
+    return (
+        <ul className="app-list list-group">
+            {elems}
+        </ul>
     )
 }
 

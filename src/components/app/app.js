@@ -28,37 +28,29 @@ function App() {
   const total = employees.length;
   const increased = employees.filter(elem => elem.increase).length;
 
-  function toggleMode(id) {
-  setEmployees(employees.map(item => {
-    if (item.id === id) {
-      item.increase = !item.increase;
-    }
-    return item;
-  }));
-}
+  function toggleMode(id, prop) {
+    setEmployees(employees.map(item => {
+      if (item.id === id) {
+        return {...item, [prop]: !item[prop]};
+      }
+      return item;
+    }));
+  }
 
-  function toggleLike(id) {
-  setEmployees(employees.map(item => {
-    if (item.id === id) {
-      item.like = !item.like;
-    }
-    return item;
-  }));
-}
 
-function removeEmployee(id) {
-  const index = employees.findIndex(elem => elem.id === id);
-  setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
-}
+  function removeEmployee(id) {
+    const index = employees.findIndex(elem => elem.id === id);
+    setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
+  }
 
-function addEmployee(name, rate) {
-  let newEmployee = {
-      id: id(),  
-      name: name,
-      rate: rate
-  };
-  setEmployees([...employees, newEmployee]);
-}
+  function addEmployee(name, rate) {
+    let newEmployee = {
+        id: id(),  
+        name: name,
+        rate: rate
+    };
+    setEmployees([...employees, newEmployee]);
+  }
 
 
   return (
@@ -70,7 +62,7 @@ function addEmployee(name, rate) {
             <AppFilter/>
         </div>
         
-        <EmployeesList employees={employees} toggleMode={toggleMode} toggleLike={toggleLike} removeEmployee={removeEmployee}/>
+        <EmployeesList employees={employees} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
         <EmployeesAddForm addEmployee={addEmployee}/>
     </div>
   );

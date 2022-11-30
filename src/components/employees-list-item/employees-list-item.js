@@ -1,7 +1,7 @@
 
 import './employees-list-item.css';
 
-const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLike, removeEmployee}) => {
+const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, removeEmployee}) => {
 
     let classNames = "list-group-item d-flex justify-content-between";
     if (increase) {
@@ -15,13 +15,15 @@ const EmployeesListItem = ({id, name, rate, increase, toggleMode, like, toggleLi
         <li className={classNames}>
             <span 
                 className="list-group-item-label"
-                onClick={() => toggleLike(id)}
-                >{name}</span>
+                onClick={() => toggleMode(id, 'like')}>
+                    {name}
+            </span>
             <input type="text" className="list-group-item-input" defaultValue={'$' + rate}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm "
-                    onClick={() => toggleMode(id)}>
+                    onClick={() => toggleMode(id, 'increase')}
+                >
                     <i className="fas fa-cookie"></i>
                 </button>
  
