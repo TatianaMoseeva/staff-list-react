@@ -1,7 +1,13 @@
 import EmployeesListItem from "../employees-list-item/employees-list-item";
+import EmployeesAddForm from '../employees-add-form/employees-add-form';
 import {useState} from 'react';
+import { nanoid } from 'nanoid';
 
 import './employees-list.css';
+
+function id() {
+	return nanoid();
+}
 
 const EmployeesList = ({data}) => {
     
@@ -26,7 +32,6 @@ const EmployeesList = ({data}) => {
 	}
 
     const elems =  employees.map(item => {
-
             return <EmployeesListItem
                 key={item.id}
                 id={item.id}
@@ -40,11 +45,26 @@ const EmployeesList = ({data}) => {
             
     })
     
- 
-    return (
-        <ul className="app-list list-group">
-            {elems}
-        </ul>
+    function addEmployee(name, rate) {
+        let newEmployee = {
+            id: id(),  
+            name: name,
+            rate: rate
+        };
+        setEmployees([...employees, newEmployee]);
+        console.log(newEmployee);
+    }
+
+
+
+
+    return ( <>
+                <ul className="app-list list-group">
+                    {elems}
+                </ul>
+            <EmployeesAddForm addEmployee={addEmployee}/>
+        </>
+
     )
 }
 

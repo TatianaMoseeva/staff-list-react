@@ -1,16 +1,21 @@
 import {useState} from 'react';
 import './employees-add-form.css';
 
-const EmployeesAddForm = () => {
+const EmployeesAddForm = ({addEmployee}) => {
 
     const [name, setName] = useState('');
     const [rate, setRate] = useState('');
+
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
 
     return (
         <div className="app-add-form">
             <h3>Add a new employee</h3>
             <form
-                className="add-form d-flex">
+                className="add-form d-flex"
+                onSubmit={handleSubmit}>
                 <input type="text"
                     className="form-control new-post-label"
                     placeholder="Name and Surname" 
@@ -25,7 +30,9 @@ const EmployeesAddForm = () => {
                 />
 
                 <button type="submit"
-                    className="btn btn-outline-light">Add employee
+                    className="btn btn-outline-light"
+                    onClick={() => addEmployee(name, rate)}>
+                        Add employee
                 </button>
             </form>
         </div>
