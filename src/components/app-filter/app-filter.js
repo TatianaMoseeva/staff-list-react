@@ -1,6 +1,7 @@
 import "./app-filter.css";
 
-const AppFilter = () => {
+const AppFilter = ({applyFilter}) => {
+
     return (
         <div className="btn-group">
             <button type="button"
@@ -8,7 +9,9 @@ const AppFilter = () => {
                     All employees
             </button>
             <button type="button"
-                    className="btn btn-outline-light">
+                    className="btn btn-outline-light"
+                    onClick={applyFilter}
+            >
                     To be promoted
             </button>
             <button type="button"
