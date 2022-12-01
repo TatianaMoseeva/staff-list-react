@@ -23,15 +23,16 @@ const initData = [
 
 function App() {
 
-  const [employees, setEmployees] = useState({data: initData, query: 'P'});
- 
-  const {data, query} = employees;
-  const total = data.length;
-  const increased = data.filter(elem => elem.increase).length;
-  const visibleData = searchEmp (data, query);
+  const [employees, setEmployees] = useState(initData);
+  const [query, setQuery] = useState('');
+
+  const total = employees.length;
+  const increased = employees.filter(elem => elem.increase).length;
+
+  const visibleData = searchEmp(employees, query);
 
   function searchEmp (items, term) {
-    if (TrackEvent.length === 0) {
+    if (term.length === 0) {
       return items;
     }
     return items.filter(item => {
@@ -39,8 +40,12 @@ function App() {
     })
   }
 
+  function handleSearch (e) {
+    setQuery(e.target.value);
+  }
+
   function toggleMode(id, prop) {
-    setEmployees(data.map(item => {
+    setEmployees(employees.map(item => {
       if (item.id === id) {
         return {...item, [prop]: !item[prop]};
       }
@@ -48,10 +53,9 @@ function App() {
     }));
   }
 
-
   function removeEmployee(id) {
-    const index = data.findIndex(elem => elem.id === id);
-    setEmployees([...data.slice(0, index), ...employees.slice(index + 1)])
+    const index = employees.findIndex(elem => elem.id === id);
+    setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
   }
 
   function addEmployee(name, rate) {
@@ -62,21 +66,18 @@ function App() {
     };
 
     if (newEmployee.name.length > 0 && newEmployee.rate) {
-      setEmployees([...data, newEmployee]);
+      setEmployees([...employees, newEmployee]);
     }
   }
-
-
 
   return (
     <div className="app">
         <AppInfo total={total} increased={increased}/>
 
         <div className="search-panel">
-            <SearchPanel />
+            <SearchPanel query={query} handleSearch={handleSearch}/>
             <AppFilter/>
         </div>
-        
         <EmployeesList employees={visibleData} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
         <EmployeesAddForm addEmployee={addEmployee}/>
     </div>
