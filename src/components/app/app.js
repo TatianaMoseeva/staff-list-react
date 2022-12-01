@@ -13,7 +13,7 @@ function id() {
 	return nanoid();
 }
 
-const data = [
+const initData = [
     {id: id(), name: 'John Smith', rate: 800, increase: false, like: false},
     {id: id(), name: 'Peppa Pig', rate: 900, increase: false, like: false},
     {id: id(), name: 'Danny Dog', rate: 1100, increase: false, like: false},
@@ -23,13 +23,24 @@ const data = [
 
 function App() {
 
-  const [employees, setEmployees] = useState(data);
+  const [employees, setEmployees] = useState({data: initData, query: 'P'});
+ 
+  const {data, query} = employees;
+  const total = data.length;
+  const increased = data.filter(elem => elem.increase).length;
+  const visibleData = searchEmp (data, query);
 
-  const total = employees.length;
-  const increased = employees.filter(elem => elem.increase).length;
+  function searchEmp (items, term) {
+    if (TrackEvent.length === 0) {
+      return items;
+    }
+    return items.filter(item => {
+      return item.name.indexOf(term) > -1;
+    })
+  }
 
   function toggleMode(id, prop) {
-    setEmployees(employees.map(item => {
+    setEmployees(data.map(item => {
       if (item.id === id) {
         return {...item, [prop]: !item[prop]};
       }
@@ -39,8 +50,8 @@ function App() {
 
 
   function removeEmployee(id) {
-    const index = employees.findIndex(elem => elem.id === id);
-    setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
+    const index = data.findIndex(elem => elem.id === id);
+    setEmployees([...data.slice(0, index), ...employees.slice(index + 1)])
   }
 
   function addEmployee(name, rate) {
@@ -51,9 +62,10 @@ function App() {
     };
 
     if (newEmployee.name.length > 0 && newEmployee.rate) {
-      setEmployees([...employees, newEmployee]);
+      setEmployees([...data, newEmployee]);
     }
   }
+
 
 
   return (
@@ -61,14 +73,16 @@ function App() {
         <AppInfo total={total} increased={increased}/>
 
         <div className="search-panel">
-            <SearchPanel/>
+            <SearchPanel />
             <AppFilter/>
         </div>
         
-        <EmployeesList employees={employees} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
+        <EmployeesList employees={visibleData} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
         <EmployeesAddForm addEmployee={addEmployee}/>
     </div>
   );
 }
 
 export default App;
+
+
