@@ -26,7 +26,7 @@ function App() {
     const [employees, setEmployees] = useState(initData);
     const [query, setQuery] = useState('');
 
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState('all');
 
     const total = employees.length;
     const increased = employees.filter(elem => elem.increase).length;
@@ -90,7 +90,7 @@ function App() {
 
             <div className="search-panel">
                 <SearchPanel query={query} handleSearch={handleSearch}/>
-                <AppFilter applyFilter={applyFilter}/>
+                <AppFilter filter={filter} applyFilter={applyFilter}/>
             </div>
             <EmployeesList employees={visibleData} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
             <EmployeesAddForm addEmployee={addEmployee}/>
