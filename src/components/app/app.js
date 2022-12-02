@@ -23,77 +23,79 @@ const initData = [
 
 function App() {
 
-  const [employees, setEmployees] = useState(initData);
-  const [query, setQuery] = useState('');
+    const [employees, setEmployees] = useState(initData);
+    const [query, setQuery] = useState('');
 
-  const [filter, setFilter] = useState(false);
+    const [filter, setFilter] = useState('');
 
-  const total = employees.length;
-  const increased = employees.filter(elem => elem.increase).length;
-  const visibleData = filterData(searchEmp(employees, query));
+    const total = employees.length;
+    const increased = employees.filter(elem => elem.increase).length;
+    const visibleData = filterData((searchEmp(employees, query)));
 
-  function applyFilter() {
-    setFilter(!filter);
-  }
-
-  function filterData(items) {
-    if (!filter) {
-      return items;
+    function applyFilter(prop) {
+        setFilter(prop);
     }
-    return items.filter(item => item.like) 
-  }
 
-  function searchEmp (items, term) {
-    if (term.length === 0) {
-      return items;
+    function filterData(items) {
+        if (filter === 'like') {
+            return items.filter(item => item.like) 
+        }
+        if (filter === 'moreThen1000') {
+            return items.filter(item => item.rate > 1000) 
+        }
+        return items;
     }
-    return items.filter(item => {
-      return item.name.indexOf(term) > -1;
-    })
-  }
 
-  function handleSearch (e) {
-    setQuery(e.target.value);
-  }
-
-  function toggleMode(id, prop) {
-    setEmployees(employees.map(item => {
-      if (item.id === id) {
-        return {...item, [prop]: !item[prop]};
-      }
-      return item;
-    }));
-  }
-
-  function removeEmployee(id) {
-    const index = employees.findIndex(elem => elem.id === id);
-    setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
-  }
-
-  function addEmployee(name, rate) {
-    let newEmployee = {
-        id: id(),  
-        name: name,
-        rate: rate
-    };
-
-    if (newEmployee.name.length > 0 && newEmployee.rate) {
-      setEmployees([...employees, newEmployee]);
+    function searchEmp (items, term) {
+        if (term.length === 0) {
+            return items;
+        }
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1;
+        })
     }
-  }
 
-  return (
-    <div className="app">
-        <AppInfo total={total} increased={increased}/>
+    function handleSearch (e) {
+        setQuery(e.target.value);
+    }
 
-        <div className="search-panel">
-            <SearchPanel query={query} handleSearch={handleSearch}/>
-            <AppFilter applyFilter={applyFilter}/>
+    function toggleMode(id, prop) {
+        setEmployees(employees.map(item => {
+            if (item.id === id) {
+                return {...item, [prop]: !item[prop]};
+            }
+            return item;
+        }));
+    }
+
+    function removeEmployee(id) {
+        const index = employees.findIndex(elem => elem.id === id);
+        setEmployees([...employees.slice(0, index), ...employees.slice(index + 1)])
+    }
+
+    function addEmployee(name, rate) {
+        let newEmployee = {
+            id: id(),  
+            name: name,
+            rate: rate
+        };
+        if (newEmployee.name.length > 0 && newEmployee.rate) {
+            setEmployees([...employees, newEmployee]);
+        }
+    }
+
+    return (
+        <div className="app">
+            <AppInfo total={total} increased={increased}/>
+
+            <div className="search-panel">
+                <SearchPanel query={query} handleSearch={handleSearch}/>
+                <AppFilter applyFilter={applyFilter}/>
+            </div>
+            <EmployeesList employees={visibleData} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
+            <EmployeesAddForm addEmployee={addEmployee}/>
         </div>
-        <EmployeesList employees={visibleData} toggleMode={toggleMode}  removeEmployee={removeEmployee}/>
-        <EmployeesAddForm addEmployee={addEmployee}/>
-    </div>
-  );
+    );
 }
 
 export default App;
